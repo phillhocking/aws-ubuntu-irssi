@@ -25,15 +25,15 @@ write_files:
       sudo systemctl enable --now oidentd
 
       # Retrieve irssi CONFIG from Github Gist: 
-      curl https://api.github.com/gists/%{var.irssi_gist} |jq ".files.config.content | fromjson" |& tee config
+      curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee config
 
       # create irc unprivileged user 
       sudo -i
-      bash /home/ubuntu/users.sh %{var.irc_username} %{var.gh_username}
+      bash /home/ubuntu/users.sh ${irc_username} ${gh_username}
 
       # Retrieve irssi CONFIG from Github Gist: 
-      curl https://api.github.com/gists/%{var.irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
-      chown -r %{var.irc_username}:%{var.irc_username}/home/%{irc_username}/.irssi/
+      curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
+      chown -r ${irc_username}:${irc_username}/home/${irc_username}/.irssi/
   - path: /home/ubuntu/users.sh
     permissions: '0755'
     owner: ubuntu:ubuntu
