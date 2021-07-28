@@ -10,6 +10,7 @@ packages:
 runcmd:
   - apt-get update -y
   - chown -R ubuntu:ubuntu /home/ubuntu
+  - bash /home/ubuntu/users.sh ${irc_username} ${gh_username}
   - bash /home/ubuntu/irssi.sh
   
 # Enable ipv4 forwarding, required on CIS hardened machines
@@ -72,10 +73,6 @@ write_files:
       #!/bin/bash
       sudo apt update ; sudo apt install -y build-essential net-tools software-properties-common irssi irssi-scripts screen openssh-server oidentd jq
       sudo systemctl enable --now oidentd
-
-      # create irc unprivileged user
-      sudo -i 
-      bash /home/ubuntu/users.sh ${irc_username} ${gh_username}
 
       # Retrieve irssi CONFIG from Github Gist:
       curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
