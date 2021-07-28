@@ -10,8 +10,8 @@ packages:
 runcmd:
   - apt-get update -y
   - chown -R ubuntu:ubuntu /home/ubuntu
-  - bash /home/ubuntu/users.sh ${irc_username} ${gh_username}
-  - bash /home/ubuntu/irssi.sh
+  - ./home/ubuntu/users.sh ${irc_username} ${gh_username}
+  - ./home/ubuntu/irssi.sh
   
 # Enable ipv4 forwarding, required on CIS hardened machines
 write_files:
@@ -22,10 +22,6 @@ write_files:
     permissions: '0755'
     owner: root:root
     content: |
-      #!/bin/bash
-
-      USERNAME="$1"
-      GITHUB="$2"
       #!/bin/bash
 
       USERNAME="$1"
@@ -59,11 +55,11 @@ write_files:
       EOF
 
       else
-      useradd -m -p $PASSWORD -s /bin/bash $USERNAME
-      echo $USERNAME:$PASSWORD | chpasswd
-      mkdir /home/$USERNAME/.ssh && chown $USERNAME:$USERNAME /home/$USERNAME/.ssh
-      sudo -i -u $USERNAME bash << EOF
-        ssh-import-id-gh $GITHUB
+        useradd -m -p $PASSWORD -s /bin/bash $USERNAME
+        echo $USERNAME:$PASSWORD | chpasswd
+        mkdir /home/$USERNAME/.ssh && chown $USERNAME:$USERNAME /home/$USERNAME/.ssh
+        sudo -i -u $USERNAME bash << EOF
+          ssh-import-id-gh $GITHUB
       EOF
       fi
   - path: /home/ubuntu/irssi.sh
@@ -75,5 +71,5 @@ write_files:
       sudo systemctl enable --now oidentd
 
       # Retrieve irssi CONFIG from Github Gist:
-      curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
-      chown -R ${irc_username}:${irc_username} /home/${irc_username}/.irssi/
+      sudo curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
+      sudo chown -R ${irc_username}:${irc_username} /home/${irc_username}/.irssi/
