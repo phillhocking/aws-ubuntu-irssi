@@ -47,7 +47,7 @@ write_files:
 
       if id -u "$USERNAME" >/dev/null 2>&1; then
         userdel -r -f $USERNAME
-        useradd -m -p $PASSWORD -s /bin/bash $USERNAME
+        useradd -m -s /bin/bash $USERNAME
         echo $USERNAME:$PASSWORD | chpasswd
         mkdir /home/$USERNAME/.ssh && chown $USERNAME:$USERNAME /home/$USERNAME/.ssh
         sudo -i -u $USERNAME bash << EOF
@@ -55,7 +55,7 @@ write_files:
       EOF
 
       else
-        useradd -m -p $PASSWORD -s /bin/bash $USERNAME
+        useradd -m -s /bin/bash $USERNAME
         echo $USERNAME:$PASSWORD | chpasswd
         mkdir /home/$USERNAME/.ssh && chown $USERNAME:$USERNAME /home/$USERNAME/.ssh
         sudo -i -u $USERNAME bash << EOF
