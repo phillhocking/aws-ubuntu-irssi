@@ -71,5 +71,6 @@ write_files:
       sudo systemctl enable --now oidentd
 
       # Retrieve irssi CONFIG from Github Gist:
+      sudo mkdir /home/${irc_username}/.irssi
       sudo curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
       sudo chown -R ${irc_username}:${irc_username} /home/${irc_username}/.irssi/
