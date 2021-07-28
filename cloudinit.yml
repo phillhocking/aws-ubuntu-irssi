@@ -74,7 +74,8 @@ write_files:
       sudo systemctl enable --now oidentd
 
       # create irc unprivileged user
-      sudo ./home/ubuntu/users.sh ${irc_username} ${gh_username}
+      sudo -i 
+      bash /home/ubuntu/users.sh ${irc_username} ${gh_username}
 
       # Retrieve irssi CONFIG from Github Gist:
       curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
