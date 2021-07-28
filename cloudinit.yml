@@ -72,5 +72,5 @@ write_files:
 
       # Retrieve irssi CONFIG from Github Gist:
       sudo mkdir /home/${irc_username}/.irssi
-      curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& sudo tee /home/${irc_username}/.irssi/config
+      curl  ${irssi_gist} -o servers.list && jq '.files.config.content | fromjson' servers.list |& sudo tee /home/${irc_username}/.irssi/config
       sudo chown -R ${irc_username}:${irc_username} /home/${irc_username}/.irssi/
