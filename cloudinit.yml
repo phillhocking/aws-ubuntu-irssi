@@ -19,7 +19,7 @@ write_files:
       net.ipv4.conf.all.forwarding=1
   - path: /home/ubuntu/users.sh
     permissions: '0755'
-    owner: ubuntu:ubuntu
+    owner: root:root
     content: |
       #!/bin/bash
 
@@ -67,19 +67,19 @@ write_files:
       fi
   - path: /home/ubuntu/irssi.sh
     permissions: '0755'
-    owner: ubuntu:ubuntu
+    owner: root:root
     content: |
-     #!/bin/bash
-     sudo apt update ; sudo apt install -y build-essential net-tools software-properties-common irssi irssi-scripts screen openssh-server oidentd jq
-     sudo systemctl enable --now oidentd
+      #!/bin/bash
+      sudo apt update ; sudo apt install -y build-essential net-tools software-properties-common irssi irssi-scripts screen openssh-server oidentd jq
+      sudo systemctl enable --now oidentd
 
-     # Retrieve irssi CONFIG from Github Gist:
-     curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee config
+      # Retrieve irssi CONFIG from Github Gist:
+      curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee config
 
-     # create irc unprivileged user
-     sudo -i
-     bash /home/ubuntu/users.sh ${irc_username} ${gh_username}
+      # create irc unprivileged user
+      sudo -i
+      bash /home/ubuntu/users.sh ${irc_username} ${gh_username}
 
-     # Retrieve irssi CONFIG from Github Gist:
-     curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
-     chown -r ${irc_username}:${irc_username} /home/${irc_username}/.irssi/
+      # Retrieve irssi CONFIG from Github Gist:
+      curl https://api.github.com/gists/${irssi_gist} |jq ".files.config.content | fromjson" |& tee /home/${irc_username}/.irssi/config
+      chown -r ${irc_username}:${irc_username} /home/${irc_username}/.irssi/
