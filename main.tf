@@ -32,7 +32,7 @@ resource "aws_instance" "irssi_dev" {
     volume_type = "standard"
     volume_size = 8
   }
-    
+
   tags = {
     Name = "irssi-dev"
   }
