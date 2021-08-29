@@ -27,7 +27,7 @@ resource "aws_instance" "irssi_dev" {
   cpu_threads_per_core   = "1"
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.irssi_dev.id]
-  user_data              = templatefile("${path.module}/cloudinit.yml", { irc_username = var.irc_username, gh_username = var.gh_username, irssi_gist = var.irssi_gist })
+  user_data              = templatefile("${path.module}/cloudinit.yml", { irc_username = var.irc_username, gh_username = var.gh_username })
   root_block_device {
     volume_type = "standard"
     volume_size = 8
