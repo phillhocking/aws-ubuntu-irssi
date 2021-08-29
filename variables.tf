@@ -16,7 +16,3 @@ variable "irc_username" {
 variable "gh_username" {
   default = "phillhocking"
 }
-
-variable "irssi_gist" {
-  default = "af404e560fb60255c5db7f9ecfe844ec"
-}

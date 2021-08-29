@@ -69,8 +69,3 @@ write_files:
       #!/bin/bash
       sudo apt update ; sudo apt install -y build-essential net-tools software-properties-common irssi irssi-scripts screen openssh-server oidentd jq
       sudo systemctl enable --now oidentd
-
-      # Retrieve irssi CONFIG from Github Gist:
-      sudo mkdir /home/${irc_username}/.irssi
-      curl  https://api.github.com/gists/${irssi_gist} -o servers.list && jq '.files.config.content | fromjson' servers.list |& sudo tee /home/${irc_username}/.irssi/config
-      sudo chown -R ${irc_username}:${irc_username} /home/${irc_username}/.irssi/
